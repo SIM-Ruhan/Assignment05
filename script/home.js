@@ -1,3 +1,4 @@
+let allCard =[];
 const allBtn = document.getElementById('all-filter-btn');
 const openBtn = document.getElementById('open-filter-btn');
 const closedBtn = document.getElementById('closed-filter-btn');
@@ -7,19 +8,38 @@ const toggleStyle =(id) => {
     openBtn.classList.remove("bg-[#4A00FF]" ,"text-white");
     closedBtn.classList.remove("bg-[#4A00FF]" ,"text-white");
 
-    allBtn.classList.add("bg-white", "text-[#64748B]");
+    allBtn.classList.add("bg-white", "text-[#64748B]","border","border-[#E4E4E7]");
     openBtn.classList.add("bg-white", "text-[#64748B]");
     closedBtn.classList.add("bg-white", "text-[#64748B]");
 
     const selected = document.getElementById(id);
        selected.classList.remove("bg-white", "text-[#64748B]");
     selected.classList.add("bg-[#4A00FF]" ,"text-white");
+if(id == 'all-filter-btn'){
+ displayCard(allCard);
 }
+
+else if(id == 'closed-filter-btn'){
+    const closedCards = allCard.filter(card => card.status === "closed");
+    displayCard(closedCards);
+}
+ else if(id == 'open-filter-btn') {
+    const openCards = allCard.filter(card => card.status === "open");
+    displayCard(openCards);
+}
+}
+
+
+
+
 
 const loadCard = () => {
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then((res) => res.json())
-    .then((data) => displayCard(data.data));
+    .then((data) => {
+        allCard = data.data;
+        displayCard(data.data);
+    });
   
 }
 
@@ -72,3 +92,4 @@ const displayCard = (cards) => {
     }
 }
 loadCard();
+
