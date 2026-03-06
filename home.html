@@ -3,9 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <title>Home-Page</title>
 </head>
-<body>
-    Welcome to shit
+<body class="bg-[#F8FAFC]">
+    <!-- Nav Bar -->
+<nav class="px-20 py-4 flex justify-between items-center shadow bg-white">
+    <div class="flex items-center gap-1">
+        <img class="w-9" src="./assets/github-logo.png" alt="github logo">
+        <p class="font-semibold text-2xl">GitHub Issues Tracker</p>
+    </div>
+    <div>
+        <input type="text" placeholder="Search issues..." class="p-1 border-[#E4E4E7] rounded-sm">
+        <button class="bg-[#4A00FF] text-white px-3 py-1.5 rounded-sm">+New Issue</button>
+    </div>
+</nav>
+<!-- All Open Close -->
+<header>
+<div class="w-[85%] mx-auto mt-15 p-4 bg-white shadow space-x-2">
+    <button onclick="toggleStyle('all-filter-btn')" class="bg-[#4A00FF] text-white px-5 py-2 rounded-sm" id="all-filter-btn">All</button>
+    <button onclick="toggleStyle('open-filter-btn')" class="bg-white text-[#64748B] border border-[#E4E4E7] px-5 py-2 rounded-sm" id="open-filter-btn">Open</button>
+    <button onclick="toggleStyle('closed-filter-btn')" class="bg-white text-[#64748B] border border-[#E4E4E7] px-5 py-2 rounded-sm" id="closed-filter-btn">Closed</button>
+</div>
+</header>
+
+
+<script src="./script/home.js"></script>
 </body>
 </html>
