@@ -166,3 +166,19 @@ priorityBadge.innerText = card.priority;
 
     document.getElementById("modal").showModal();
 }
+
+document.getElementById('search').addEventListener('click', () => {
+
+    const input = document.getElementById('input');
+    const searchValue = input.value.trim();
+
+    if(searchValue === "") return;
+
+    fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
+    .then(res => res.json())
+    .then(data => {
+        const issues = data.data;
+        displayCard(issues);
+    })
+
+});
