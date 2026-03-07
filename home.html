@@ -51,6 +51,9 @@
     </div>  </div>
  </section>
 
+ <!-- Loading Spinner -->
+  <div id="spinner" class="hidden"><span class="loading loading-ring loading-xl"></span></div>
+
 <!-- Card Section -->
  <section id="cardContainer" class="bg-[#FBFBFB] w-[85%] mx-auto p-6 grid grid-cols-1 md:grid-cols-4 gap-3 shadow">
     <div class="p-4 border border-gray-200 border-t-4 border-t-green-500 rounded-lg">
@@ -73,6 +76,46 @@
 
 </div>
  </section>
+<!-- Modal section -->
+<dialog id="modal" class="modal modal-middle">
+  <div class="modal-box max-w-2xl">
+
+    <h3 id="modal-title" class="text-2xl font-bold mb-2"></h3>
+
+    <div class="flex items-center gap-3 text-sm text-gray-500 mb-3">
+        <span id="modal-status" class="px-3 py-1 rounded-full text-xs font-semibold"></span>
+        <span>•</span>
+        <span>Opened by <span id="modal-author" class="font-medium"></span></span>
+        <span>•</span>
+        <span id="modal-update"></span>
+    </div>
+
+    <div id="modal-labels" class="flex gap-2 mb-4"></div>
+
+    <p id="modal-description" class="text-gray-600 mb-6"></p>
+
+    <div class="bg-gray-100 rounded-lg p-4 flex justify-between">
+
+        <div>
+            <p class="text-sm text-gray-500">Assignee:</p>
+            <p id="modal-assignee" class="font-semibold"></p>
+        </div>
+
+        <div>
+            <p class="text-sm text-gray-500">Priority:</p>
+            <span id="modal-priority" class="px-3 py-1 rounded-full text-xs font-semibold"></span>
+        </div>
+
+    </div>
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="bg-[#4A00FF] text-white px-5 py-2 rounded-md">Close</button>
+      </form>
+    </div>
+
+  </div>
+</dialog>
+
 
 <script src="./script/home.js"></script>
 </body>

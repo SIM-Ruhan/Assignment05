@@ -5,8 +5,17 @@ const allBtn = document.getElementById('all-filter-btn');
 const openBtn = document.getElementById('open-filter-btn');
 const closedBtn = document.getElementById('closed-filter-btn');
 const issues = document.getElementById("issues");
+const spinner = document.getElementById("spinner");
+
+const showSpinner = () => {
+    spinner.classList.remove("hidden");
+}
+const hideSpinner = () => {
+    spinner.classList.add("hidden");
+}
 
 const toggleStyle =(id) => {
+    showSpinner();
     allBtn.classList.remove("bg-[#4A00FF]" ,"text-white");
     openBtn.classList.remove("bg-[#4A00FF]" ,"text-white");
     closedBtn.classList.remove("bg-[#4A00FF]" ,"text-white");
@@ -33,9 +42,11 @@ else if(id == 'closed-filter-btn'){
     issues.innerText = openCard.length;
     displayCard(openCards);
 }
+hideSpinner();
 }
 
 const loadCard = () => {
+    showSpinner();
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
     .then((res) => res.json())
     .then((data) => {
@@ -45,7 +56,7 @@ const loadCard = () => {
     closedCard = allCard.filter(card => card.status === "closed");
         displayCard(data.data);
     });
-  
+  hideSpinner();
 }
 
 const displayCard = (cards) => {
@@ -53,20 +64,23 @@ const displayCard = (cards) => {
     cardContainer.innerHTML = "";
 
     for (let card of cards) {
-
         let borderColor = "border-t-green-500";
-        let badgeColor = "bg-red-200 text-red-500";
         let statusImg = "./assets/Open-Status.png";
+        let badgeColor = "bg-gray-200 text-gray-500";
 
-        if (card.status === "open") {
+        if (card.priority === "high") {
+            badgeColor = "bg-red-200 text-red-600";
+        }
+        else if(card.priority === "medium"){
             badgeColor = "bg-yellow-200 text-yellow-600";
         }
 
-        else if (card.status === "closed") {
+        if (card.status === "closed") {
             borderColor = "border-t-purple-500";
-            badgeColor = "bg-gray-200 text-gray-500";
             statusImg = "./assets/Closed- Status .png";
         }
+
+
 let labelsHTML = "";
 for (let label of card.labels) {
 
@@ -78,7 +92,7 @@ for (let label of card.labels) {
 }
         const cardDiv = document.createElement("div");
         cardDiv.innerHTML = `
-<div class="p-4 border border-gray-200 border-t-4 ${borderColor} rounded-lg">
+<div onclick="openModal(${card.id})" class="p-4 border border-gray-200 border-t-4 ${borderColor} rounded-lg">
 
 <div class="flex justify-between">
     <div><img src="${statusImg}"></div>
@@ -107,3 +121,48 @@ for (let label of card.labels) {
 }
 loadCard();
 
+function openModal(id){
+
+    const card = allCard.find(c => c.id === id);
+
+    document.getElementById("modal-title").innerText = card.title;
+    document.getElementById("modal-description").innerText = card.description;
+    document.getElementById("modal-author").innerText = card.author;
+    document.getElementById("modal-update").innerText = card.updatedAt;
+    document.getElementById("modal-assignee").innerText = card.author;
+
+    const statusBadge = document.getElementById("modal-status");
+
+    if(card.status === "open"){
+        statusBadge.innerText = "Opened";
+        statusBadge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-600";
+    } else {
+        statusBadge.innerText = "Closed";
+        statusBadge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-purple-100 text-purple-600";
+    }
+
+    const priorityBadge = document.getElementById("modal-priority");
+priorityBadge.innerText = card.priority;
+    if(card.priority === "high"){
+        priorityBadge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-red-200 text-red-600";
+    }
+    else if(card.priority === "medium"){
+        priorityBadge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-yellow-200 text-yellow-600";
+    }
+    else{
+        priorityBadge.className = "px-3 py-1 rounded-full text-xs font-semibold bg-gray-200 text-gray-600";
+    }
+
+    const labelContainer = document.getElementById("modal-labels");
+    labelContainer.innerHTML = "";
+
+    for(let label of card.labels){
+        labelContainer.innerHTML += `
+        <span class="bg-[#FFF8DB] text-[#D97706] border border-[#FDE68A] text-xs px-2 py-1 rounded-full">
+            ${label}
+        </span>
+        `;
+    }
+
+    document.getElementById("modal").showModal();
+}
