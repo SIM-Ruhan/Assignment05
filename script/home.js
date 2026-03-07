@@ -38,6 +38,7 @@ const loadCard = () => {
     .then((res) => res.json())
     .then((data) => {
         allCard = data.data;
+        console.log(data.data);
         displayCard(data.data);
     });
   
@@ -62,7 +63,15 @@ const displayCard = (cards) => {
             badgeColor = "bg-gray-200 text-gray-500";
             statusImg = "./assets/Closed- Status .png";
         }
+let labelsHTML = "";
+for (let label of card.labels) {
 
+    labelsHTML += `
+    <span class="bg-[#FFF8DB] text-[#D97706] border border-[#FDE68A] text-[12px] px-2 py-1 rounded-full">
+        ${label}
+    </span>
+    `;
+}
         const cardDiv = document.createElement("div");
 
         cardDiv.innerHTML = `
@@ -79,11 +88,13 @@ const displayCard = (cards) => {
 <h4 class="text-[14px] font-semibold my-3">${card.title}</h4>
 
 <p class="text-[12px] text-[#64748B] line-clamp-2">${card.description}</p>
-
+<div class="flex gap-2 my-3">
+    ${labelsHTML}
+</div>
 <hr class="text-[#E4E4E7]">
 
 <p class="text-[12px] text-[#64748B] mt-4">#${card.id} by ${card.author}</p>
-<p class="text-[12px] text-[#64748B]">${card.date}</p>
+<p class="text-[12px] text-[#64748B]">${card.updatedAt}</p>
 
 </div>
 `;
