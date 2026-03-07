@@ -1,7 +1,10 @@
 let allCard =[];
+let openCard =[];
+let closedCard =[];
 const allBtn = document.getElementById('all-filter-btn');
 const openBtn = document.getElementById('open-filter-btn');
 const closedBtn = document.getElementById('closed-filter-btn');
+const issues = document.getElementById("issues");
 
 const toggleStyle =(id) => {
     allBtn.classList.remove("bg-[#4A00FF]" ,"text-white");
@@ -16,22 +19,21 @@ const toggleStyle =(id) => {
        selected.classList.remove("bg-white", "text-[#64748B]");
     selected.classList.add("bg-[#4A00FF]" ,"text-white");
 if(id == 'all-filter-btn'){
+    issues.innerText = allCard.length;
  displayCard(allCard);
 }
 
 else if(id == 'closed-filter-btn'){
     const closedCards = allCard.filter(card => card.status === "closed");
+    issues.innerText = closedCard.length;
     displayCard(closedCards);
 }
  else if(id == 'open-filter-btn') {
     const openCards = allCard.filter(card => card.status === "open");
+    issues.innerText = openCard.length;
     displayCard(openCards);
 }
 }
-
-
-
-
 
 const loadCard = () => {
     fetch("https://phi-lab-server.vercel.app/api/v1/lab/issues")
@@ -39,6 +41,8 @@ const loadCard = () => {
     .then((data) => {
         allCard = data.data;
         console.log(data.data);
+ openCard = allCard.filter(card => card.status === "open");
+    closedCard = allCard.filter(card => card.status === "closed");
         displayCard(data.data);
     });
   
@@ -54,11 +58,11 @@ const displayCard = (cards) => {
         let badgeColor = "bg-red-200 text-red-500";
         let statusImg = "./assets/Open-Status.png";
 
-        if (card.priority === "medium") {
+        if (card.status === "open") {
             badgeColor = "bg-yellow-200 text-yellow-600";
         }
 
-        else if (card.priority === "low") {
+        else if (card.status === "closed") {
             borderColor = "border-t-purple-500";
             badgeColor = "bg-gray-200 text-gray-500";
             statusImg = "./assets/Closed- Status .png";
@@ -73,7 +77,6 @@ for (let label of card.labels) {
     `;
 }
         const cardDiv = document.createElement("div");
-
         cardDiv.innerHTML = `
 <div class="p-4 border border-gray-200 border-t-4 ${borderColor} rounded-lg">
 
