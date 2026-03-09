@@ -10,7 +10,7 @@ const: const declares block-scoped variables that cannot be reassigned after the
 
 2. What is the spread operator (...)?
    
-annwer : JavaScript's spread operator enables the expansion or spreading of an array's elements or an object's properties into another array or object. It is frequently used to pass elements individually when multiple values are expected, copy arrays or combine multiple arrays.The spread operator facilitates the creation of shorter and cleaner code. In contemporary JavaScript, it is helpful when working with arrays and objects.
+answer : JavaScript's spread operator enables the expansion or spreading of an array's elements or an object's properties into another array or object. It is frequently used to pass elements individually when multiple values are expected, copy arrays or combine multiple arrays.The spread operator facilitates the creation of shorter and cleaner code. In contemporary JavaScript, it is helpful when working with arrays and objects.
 
 3.  What is the difference between map(), filter(), and forEach()?
    
