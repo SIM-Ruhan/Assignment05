@@ -51,12 +51,11 @@ const loadCard = () => {
     .then((res) => res.json())
     .then((data) => {
         allCard = data.data;
-        console.log(data.data);
  openCard = allCard.filter(card => card.status === "open");
     closedCard = allCard.filter(card => card.status === "closed");
         displayCard(data.data);
-    });
   hideSpinner();
+    });
 }
 
 const displayCard = (cards) => {
@@ -111,7 +110,7 @@ for (let label of card.labels) {
 <hr class="text-[#E4E4E7]">
 
 <p class="text-[12px] text-[#64748B] mt-4">#${card.id} by ${card.author}</p>
-<p class="text-[12px] text-[#64748B]">${card.updatedAt}</p>
+<p class="text-[12px] text-[#64748B]">${card.createdAt}</p>
 
 </div>
 `;
@@ -129,7 +128,7 @@ function openModal(id){
     document.getElementById("modal-description").innerText = card.description;
     document.getElementById("modal-author").innerText = card.author;
     document.getElementById("modal-update").innerText = card.updatedAt;
-    document.getElementById("modal-assignee").innerText = card.author;
+    document.getElementById("modal-assignee").innerText = card.assignee;
 
     const statusBadge = document.getElementById("modal-status");
 
@@ -168,12 +167,10 @@ priorityBadge.innerText = card.priority;
 }
 
 document.getElementById('search').addEventListener('click', () => {
-
     const input = document.getElementById('input');
     const searchValue = input.value.trim();
 
     if(searchValue === "") return;
-
     fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchValue}`)
     .then(res => res.json())
     .then(data => {
